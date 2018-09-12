@@ -1,0 +1,105 @@
+﻿@model testpocetni.Models.PocetnaModel
+
+@{
+    ViewBag.Title = "Pocetna";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 0;
+}
+
+<h2>@ViewBag.Message</h2>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="boksovi" id="lijevo2">
+            <h1 class="podaci"><i class="fa fa-filter"></i>Filtracija</h1>
+            <hr class="podaci" />
+            @using (Html.BeginForm("Pocetna", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.ruta.idVozaca)
+                    @Html.LabelFor(model => model.ruta.polaziste, htmlAttributes: new { @class = "control-label col-md-2 labelPocetna" })
+                    <div class="col-md-7 col-md-offset-2">
+                        @Html.EditorFor(model => model.ruta.polaziste, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ruta.polaziste, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ruta.odrediste, htmlAttributes: new { @class = "control-label col-md-2 labelPocetna" })
+                    <div class="col-md-7 col-md-offset-2">
+                        @Html.EditorFor(model => model.ruta.odrediste, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ruta.odrediste, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ruta.datum, htmlAttributes: new { @class = "control-label col-md-2 labelPocetna" })
+                    <div class="col-md-7 col-md-offset-2">
+                        @Html.EditorFor(model => model.ruta.datum, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ruta.datum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ruta.vrijeme, htmlAttributes: new { @class = "control-label col-md-2 labelPocetna" })
+                    <div class="col-md-7 col-md-offset-2">
+                        @Html.EditorFor(model => model.ruta.vrijeme, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ruta.vrijeme, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ruta.nacinPlacanja, htmlAttributes: new { @class = "control-label col-md-2 labelPocetna" })
+                    <div class="col-md-7 col-md-offset-2">
+                        @Html.EditorFor(model => model.ruta.nacinPlacanja, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ruta.nacinPlacanja, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="labelPocetna col-md-10">
+                        <input type="submit" value="Filtriraj" class="btn btn-default" style="margin-bottom: 10px;"/>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-sm-8">
+        <div class="boksovi" id="desno">
+            <h1 class="podaci"><i class="fa fa-newspaper-o"></i>Objave</h1>
+            @if(Model.ListaRuta.Count == 0)
+            {
+                <h4>Nema trazenih ruta</h4>
+            }
+            @foreach (var ruta in Model.ListaRuta)
+            {
+                <br>
+                <div class='pocetnaObjave'>
+                    <a href="/Korisnik/Profil/@ruta.idVozaca"><img src="@Url.Content(Model.ListaPomocnihPodataka[i].profilnaVozaca)" width='100px' height='100px' /><br><h4>@Model.ListaPomocnihPodataka[i].imeVozaca @Model.ListaPomocnihPodataka[i].prezimeVozaca</h4></a>
+                    <ul>
+                        <li><i class='fa fa-globe'><h4>Država:</h4></i>@ruta.drzava</li>
+                        <li><i class='fa fa-map-marker'><h4>Polaziste:</h4></i>@ruta.polaziste</li>
+                        <li><i class='fa fa-map-marker'><h4>Odredište:</h4></i>@ruta.odrediste</li>
+                        <li><i class='fa fa-calendar'><h4>Datum: </h4></i>@ruta.datum</li>
+                        <li><i class='fa fa-clock-o'><h4>Vrijeme: </h4></i>@ruta.vrijeme</li>
+                        <li><i class='fa fa-credit-card-alt'><h4>Plaćanje: </h4></i>@ruta.nacinPlacanja</li>
+                    </ul>
+                </div>
+                <br>
+                <hr class='podaci'>
+                {
+                    i = i + 1;
+                }
+
+            }
+        </div>
+    </div>
+</div>
+

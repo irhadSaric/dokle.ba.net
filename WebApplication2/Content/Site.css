@@ -1,0 +1,234 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.crvena{
+    color:red;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.boksovi {
+    -webkit-box-shadow: 0px 4px 14px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 4px 14px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 4px 14px 0px rgba(0,0,0,0.3);
+}
+
+#lijevo img{
+  width: 100%;
+  height: 400px;
+}
+
+#lijevo ul li{
+  list-style-type: none;
+  padding: 20px;
+}
+
+.podaci{
+  color: #38a6a6;
+  font-size: 18px;
+}
+
+.podaci a{
+  color: #38a6a6;
+}
+
+#lijevo i {
+    padding-right: 20px;
+    margin-left: -40px;
+}
+
+
+#lijevo2 h1 {
+    font-size: 20px;
+    padding: 20px 0px 0px 20px;
+}
+
+#lijevo2 h1 i {
+    padding-right: 20px;
+}
+
+.maliBoks {
+    width: 100%;
+    border-bottom: 1px solid #38a6a6;
+    display: inline-block;
+}
+
+.maliBoks img {
+    width: 75px;
+    height: 75px;
+    float: left;
+    margin-left: 0;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+}
+
+.maliBoks p {
+    padding-top: 5px;
+    word-wrap: break-word;
+    overflow-y: auto;
+    margin-right: : 0;
+}
+
+#desno h1 {
+    padding: 20px;
+    font-size: 32px;
+}
+
+#desno i {
+    padding-right: 20px;
+}
+
+
+#desno ul li {
+    list-style-type: none;
+}
+
+.objava {
+    display: inline-block;
+    width: 100%;
+    height: 160px;
+    margin-top: -10px;
+    border-bottom: 1px solid #38a6a6;
+}
+
+
+.objava ul {
+    padding: 20px 20px 40px;
+    position: absolute;
+    margin-top: 0;
+    display: inline-block;
+}
+
+.objava ul li {
+    font-size: 18px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.objava ul li i {
+    float: left;
+    color: #38a6a6;
+}
+
+.pocetnaObjave{
+    display:inline-block;
+}
+
+.pocetnaObjave a{
+    float: left;
+    text-align: center;
+    margin-left: 20px;
+}
+
+.pocetnaObjave a h4{
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.pocetnaObjave ul{
+    margin-left: 120px;
+}
+
+.pocetnaObjava i{
+    padding-right: 40px;
+}
+
+.pocetnaObjava ul li, i, h4 {
+    display: inline;
+    color: #38a6a6;
+}
+
+.pocetnaObjava a h4 {
+    color: red;
+}
+
+.float-right{
+    float:right;
+}
+
+.width-250{
+    width:250px;
+}
+
+#Korisnik_brojTelefona {
+    width: 250px;
+}
+
+#Korisnik_mjestoStanovanja {
+    width: 250px;
+}
+
+.labelPocetna{
+    margin-left: 10px;
+}
+
+.footer {
+    text-align: center;
+    color: #9d9d9d;
+    background: #101010;
+    bottom: 0;
+    margin-bottom: -20px;
+    padding-bottom: 13px;
+}
+
+.footer .kontakt a {
+    color: #9d9d9d;
+    font-size: 20px;
+}
+
+.footer .kontakt:hover {
+    opacity: 0.7;
+}
+
+.footer .fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 70px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    border-radius: 50%;
+    transition: border-radius 0.5s;
+}
+
+.footer .fa:hover {
+    opacity: 0.7;
+}
+
+.footer .fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+.footer .fa-youtube-play {
+    background: #c72424;
+    color: white;
+}
+
+.footer .fa-instagram {
+    background: #3B5998;
+    color: white;
+}

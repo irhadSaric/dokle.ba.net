@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Dokle.ba", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav float-right">
+                    <li>@Html.ActionLink("Početna", "Pocetna", "Home")</li>
+                    @if (Session["id"] == null && Session["email"] == null)
+                    {
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                    }
+                    @if (Session["id"] == null && Session["email"] == null)
+                    {
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    }
+                    @if (Session["id"] == null && Session["email"] == null)
+                    {
+                        <li>@Html.ActionLink("Register", "AddOrEdit", "Korisnik")</li>
+                    }
+                    @if (Session["id"] == null && Session["email"] == null)
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Korisnik")</li>
+                    }
+                    @if (Session["id"] != null || Session["email"] != null)
+                    {
+                        <li>@Html.ActionLink("Profil", "Profil/" + Session["id"].ToString(), "Korisnik")</li>
+                    }
+                    @if (Session["id"] != null || Session["email"] != null)
+                    {
+                        <li>@Html.ActionLink("Dodaj rutu", "Ruta", "Korisnik")</li>
+                    }
+                    @if (Session["id"] != null || Session["email"] != null)
+                    {
+                        <li>@Html.ActionLink("Logout", "LogOut", "Korisnik")</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <div class='footer' id="onama">
+        <br />
+        <div class="kontakt"><a href="mailto:info@dokle.ba">Kontaktirajte nas</a></div>
+        <br />
+        <!--<div class="kontakt"><a href="Dokumentacija.pdf" download>Dokumentacija</a></div>-->
+        <a href="https://play.google.com/store?hl=en"><img src="~/images/appStore.png" width="150px"></a>
+        <a href="https://itunes.apple.com/us/genre/ios/id36?mt=8"><img src="~/images/googlePlay.png" width="150px"></a>
+
+        <br /><br />
+        <a href="https://www.facebook.com/" target="_blank" class="fa fa-facebook"></a>
+        <a href="https://www.youtube.com/" target="_blank" class="fa fa-youtube-play"></a>
+        <a href="https://www.instagram.com/" target="_blank" class="fa fa-instagram"></a>
+        <br /><br />
+        <p>2©17 Dokle</p>
+    </div>
+    <!-- Footer
+        <footer>
+            <div class="container-fluid">
+                <div class="text-center">
+                    <a href="mailto:info@dokle.ba">Kontakt</a>
+                </div>
+                <div class="text-center">
+                    <img src="~/images/googlePlay.png" />
+                    <img src="~/images/appStore.png" />
+                </div>
+                <div class="text-center">
+                    <i class="fa fa-facebook"></i>
+                    <i class="fa fa-youtube"></i>
+                    <i class="fa fa-instagram"></i>
+                </div>
+            </div>
+        </footer>
+        -->
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>

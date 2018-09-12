@@ -1,0 +1,15 @@
+﻿@model List<testpocetni.Models.Korisnik>
+@{
+    ViewBag.Title = "Svi";
+}
+
+<h2>Svi</h2>
+
+@foreach(var s in Model)
+{
+    <li>@s.ime</li>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
