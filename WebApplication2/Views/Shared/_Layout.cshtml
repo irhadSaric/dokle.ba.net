@@ -48,7 +48,7 @@
                     }
                     @if (Session["id"] != null || Session["email"] != null)
                     {
-                        <li>@Html.ActionLink("Poruke", "Poruke/" + Session["id"].ToString(), "Korisnik")</li>
+                        <li>@Html.ActionLink("Poruke("+Session["brojUkupnoNeprocitanih"]+")", "Poruke/" + Session["id"].ToString(), "Korisnik")</li>
                     }
                     @if (Session["id"] != null || Session["email"] != null)
                     {
@@ -100,8 +100,8 @@
         </footer>
         -->
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
-    </html>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

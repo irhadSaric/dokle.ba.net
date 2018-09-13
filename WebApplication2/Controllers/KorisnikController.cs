@@ -266,6 +266,24 @@ namespace testpocetni.Controllers
                     if(user.password == korisnikModel.password)
                     {
                         Session["id"] = user.id;
+
+                        string constr = ConfigurationManager.ConnectionStrings["ConnectionStringName"].ConnectionString;
+                        SqlConnection sqlcon = new SqlConnection(constr);
+                        if (sqlcon.State == ConnectionState.Closed)
+                        {
+                            sqlcon.Open();
+                        }
+
+                        SqlCommand sqlcmd3 = new SqlCommand("ukupnoNeprocitanih", sqlcon);
+                        sqlcmd3.CommandType = CommandType.StoredProcedure;
+                        sqlcmd3.Parameters.AddWithValue("@id", Convert.ToInt32(Session["id"]));
+                        SqlDataReader rd = sqlcmd3.ExecuteReader();
+                        if (rd.HasRows)
+                        {
+                            rd.Read(); 
+                            var brojUkupnoNeprocitanih = rd.GetInt32(0);
+                            Session["brojUkupnoNeprocitanih"] = brojUkupnoNeprocitanih;
+                        }
                         return Redirect("/Korisnik/Profil/" + user.id.ToString());
                     }
                     else
@@ -281,6 +299,7 @@ namespace testpocetni.Controllers
                     return View(korisnikModel);
                 }
             }
+
             
         }
 
@@ -378,6 +397,23 @@ namespace testpocetni.Controllers
                 sqlcon.Open();
             }
 
+            SqlCommand sqlcmd4 = new SqlCommand("procitajPoruku", sqlcon);
+            sqlcmd4.CommandType = CommandType.StoredProcedure;
+            sqlcmd4.Parameters.AddWithValue("@idPosiljaoca", Poruka.idPosiljaoca);
+            sqlcmd4.Parameters.AddWithValue("@idPrimaoca", Poruka.idPrimaoca);
+            sqlcmd4.ExecuteNonQuery();
+
+            SqlCommand sqlcmd5 = new SqlCommand("ukupnoNeprocitanih", sqlcon);
+            sqlcmd5.CommandType = CommandType.StoredProcedure;
+            sqlcmd5.Parameters.AddWithValue("@id", Convert.ToInt32(Session["id"]));
+            SqlDataReader rd = sqlcmd5.ExecuteReader();
+            if (rd.HasRows)
+            {
+                rd.Read();
+                var brojUkupnoNeprocitanih2 = rd.GetInt32(0);
+                Session["brojUkupnoNeprocitanih"] = brojUkupnoNeprocitanih2;
+            }
+
             SqlCommand sqlcmd3 = new SqlCommand("ukupnoNeprocitanih", sqlcon);
             sqlcmd3.CommandType = CommandType.StoredProcedure;
             sqlcmd3.Parameters.AddWithValue("@id", Convert.ToInt32(Session["id"]));
@@ -459,6 +495,7 @@ namespace testpocetni.Controllers
             porukeModel.listaPoruka = listaPoruka;
             porukeModel.poruka = Poruka;
             porukeModel.brojNeprocitanih = brojUkupnoNeprocitanih;
+            //Session["brojUkupnoNeprocitanih"] = brojUkupnoNeprocitanih;
             porukeModel.listaZaCitanje = listaZaCitanje;
             porukeModel.listaKorisnika = listaKorisnika;
             return View(porukeModel);
