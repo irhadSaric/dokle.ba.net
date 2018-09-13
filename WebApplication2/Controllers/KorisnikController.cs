@@ -364,6 +364,7 @@ namespace testpocetni.Controllers
         {
             PorukeModel porukeModel = new PorukeModel();
             List<poruke> listaPoruka = new List<poruke>();
+            List<int> listaIntova = new List<int>();
             List<Korisnik> listaKorisnika = new List<Korisnik>();
             List<poruke> listaZaCitanje = new List<poruke>();
             poruke Poruka = new poruke();
@@ -377,6 +378,11 @@ namespace testpocetni.Controllers
                 sqlcon.Open();
             }
 
+            SqlCommand sqlcmd3 = new SqlCommand("ukupnoNeprocitanih", sqlcon);
+            sqlcmd3.CommandType = CommandType.StoredProcedure;
+            sqlcmd3.Parameters.AddWithValue("@id", Convert.ToInt32(Session["id"]));
+            int brojUkupnoNeprocitanih = sqlcmd3.ExecuteNonQuery();
+
             SqlCommand sqlcmd = new SqlCommand("selectMojePoruke", sqlcon);
             SqlDataReader reader;
             sqlcmd.CommandType = CommandType.StoredProcedure;
@@ -386,12 +392,39 @@ namespace testpocetni.Controllers
             while (reader.Read())
             {
                 poruke porukeM = new poruke();
+
                 porukeM.idPoruke = reader.GetInt32(0);
                 porukeM.idPosiljaoca = reader.GetInt32(1);
                 porukeM.idPrimaoca = reader.GetInt32(2);
                 porukeM.procitana = reader.GetByte(3);
                 porukeM.sadrzaj = reader.GetString(4);
                 porukeM.vrijemeSlanja = reader.GetTimeSpan(5);
+
+                if(!listaIntova.Contains(porukeM.idPosiljaoca))
+                {
+                    listaIntova.Add(porukeM.idPosiljaoca);
+                    Korisnik korisnikModel = new Korisnik();
+                    SqlCommand sqlcmd2 = new SqlCommand("getPodaciKorisnika", sqlcon);
+                    SqlDataReader reader2;
+                    sqlcmd2.CommandType = CommandType.StoredProcedure;
+                    sqlcmd2.Parameters.AddWithValue("@id", porukeM.idPosiljaoca);
+                    reader2 = sqlcmd2.ExecuteReader();
+
+                    while (reader2.Read())
+                    {
+                        korisnikModel.id = reader2.GetInt32(0);
+                        korisnikModel.ime = reader2.GetString(1);
+                        korisnikModel.prezime = reader2.GetString(2);
+                        korisnikModel.email = reader2.GetString(3);
+                        korisnikModel.profilna = reader2.GetString(7);
+                        if (!reader2.IsDBNull(8))
+                            korisnikModel.mjestoStanovanja = reader2.GetString(8);
+                        if (!reader2.IsDBNull(9))
+                            korisnikModel.brojTelefona = reader2.GetString(9);
+
+                        listaKorisnika.Add(korisnikModel);
+                    }
+                }
 
                 listaPoruka.Add(porukeM);
             }
@@ -425,8 +458,9 @@ namespace testpocetni.Controllers
 
             porukeModel.listaPoruka = listaPoruka;
             porukeModel.poruka = Poruka;
-            porukeModel.brojNeprocitanih = 0;
+            porukeModel.brojNeprocitanih = brojUkupnoNeprocitanih;
             porukeModel.listaZaCitanje = listaZaCitanje;
+            porukeModel.listaKorisnika = listaKorisnika;
             return View(porukeModel);
         }
 
