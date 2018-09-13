@@ -48,6 +48,10 @@
                     }
                     @if (Session["id"] != null || Session["email"] != null)
                     {
+                        <li>@Html.ActionLink("Poruke", "Poruke/" + Session["id"].ToString(), "Korisnik")</li>
+                    }
+                    @if (Session["id"] != null || Session["email"] != null)
+                    {
                         <li>@Html.ActionLink("Dodaj rutu", "Ruta", "Korisnik")</li>
                     }
                     @if (Session["id"] != null || Session["email"] != null)

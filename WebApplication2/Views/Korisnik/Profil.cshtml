@@ -24,6 +24,17 @@
                     <input type="submit" value="Promijeni profilnu" />
                 }
             }
+            else if (Session["id"] != null && !Session["id"].Equals(Model.Korisnik.id))
+            {
+                <input type="button" id="btnRedirect" class="btn btn-default" value="Posalji poruku" />
+                <script type="text/javascript">
+                    $(function(){
+                      $("#btnRedirect").click(function(){
+                        window.location.href = "@Url.Action("Poruke/"+@Model.Korisnik.id,"Korisnik")";
+                      });
+                    });
+                </script>
+            }
         </div>
         <div style="margin-top:20px;" class="boksovi" id="lijevo">
             <ul>
@@ -92,7 +103,7 @@
                             @Html.ValidationMessageFor(model => model.Dojam.dojam, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <input type="submit" class="btn" style="margin-left: 10px; margin-top:10px;"/>
+                    <input type="submit" class="btn btn-default" style="margin-left: 10px; margin-top:10px;"/>
 
                 }
             }

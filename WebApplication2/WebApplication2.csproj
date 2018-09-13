@@ -169,6 +169,8 @@
     <Compile Include="Models\korisnik.cs" />
     <Compile Include="Models\PocetnaModel.cs" />
     <Compile Include="Models\PomPodaci.cs" />
+    <Compile Include="Models\poruke.cs" />
+    <Compile Include="Models\PorukeModel.cs" />
     <Compile Include="Models\ruta.cs" />
     <Compile Include="Models\ProfilModel.cs" />
     <Compile Include="Models\rute.cs" />
@@ -275,10 +277,10 @@
     <Content Include="Views\Korisnik\Test.cshtml" />
     <Content Include="Views\Aktivacija\Aktivacija.cshtml" />
     <Content Include="Views\Home\Pocetna.cshtml" />
+    <Content Include="Views\Korisnik\Poruke.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Dojmovi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />

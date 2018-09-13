@@ -43,6 +43,16 @@ textarea {
   padding: 20px;
 }
 
+.fullsiroko{
+    width:100%;
+}
+
+#poruka_sadrzaj{
+    height: 75px;
+    max-width: 100%;
+    width: 100%;
+}
+
 .podaci{
   color: #38a6a6;
   font-size: 18px;

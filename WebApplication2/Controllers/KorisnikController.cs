@@ -358,5 +358,106 @@ namespace testpocetni.Controllers
 
             return RedirectToAction("Profil/"+korisnik.id.ToString(), "Korisnik");
         }
+
+        [HttpGet]
+        public ActionResult Poruke(int id)
+        {
+            PorukeModel porukeModel = new PorukeModel();
+            List<poruke> listaPoruka = new List<poruke>();
+            List<Korisnik> listaKorisnika = new List<Korisnik>();
+            List<poruke> listaZaCitanje = new List<poruke>();
+            poruke Poruka = new poruke();
+            Poruka.idPrimaoca = Convert.ToInt32(Session["id"]);
+            Poruka.idPosiljaoca = Convert.ToInt32(id);
+
+            string constr = ConfigurationManager.ConnectionStrings["ConnectionStringName"].ConnectionString;
+            SqlConnection sqlcon = new SqlConnection(constr);
+            if (sqlcon.State == ConnectionState.Closed)
+            {
+                sqlcon.Open();
+            }
+
+            SqlCommand sqlcmd = new SqlCommand("selectMojePoruke", sqlcon);
+            SqlDataReader reader;
+            sqlcmd.CommandType = CommandType.StoredProcedure;
+            sqlcmd.Parameters.AddWithValue("@id", Convert.ToInt32(Session["id"]));
+            reader = sqlcmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                poruke porukeM = new poruke();
+                porukeM.idPoruke = reader.GetInt32(0);
+                porukeM.idPosiljaoca = reader.GetInt32(1);
+                porukeM.idPrimaoca = reader.GetInt32(2);
+                porukeM.procitana = reader.GetByte(3);
+                porukeM.sadrzaj = reader.GetString(4);
+                porukeM.vrijemeSlanja = reader.GetTimeSpan(5);
+
+                listaPoruka.Add(porukeM);
+            }
+
+            if (id == Convert.ToInt32(Session["id"]))
+            {
+                
+                
+            }
+            else
+            {
+                sqlcmd = new SqlCommand("selectPoruke", sqlcon);
+                sqlcmd.CommandType = CommandType.StoredProcedure;
+                sqlcmd.Parameters.AddWithValue("@idPrimaoca", Convert.ToInt32(Session["id"]));
+                sqlcmd.Parameters.AddWithValue("@idPosiljaoca", id);
+                reader = sqlcmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    poruke porukeM = new poruke();
+                    porukeM.idPoruke = reader.GetInt32(0);
+                    porukeM.idPosiljaoca = reader.GetInt32(1);
+                    porukeM.idPrimaoca = reader.GetInt32(2);
+                    porukeM.procitana = reader.GetByte(3);
+                    porukeM.sadrzaj = reader.GetString(4);
+                    porukeM.vrijemeSlanja = reader.GetTimeSpan(5);
+
+                    listaZaCitanje.Add(porukeM);
+                }
+            }
+
+            porukeModel.listaPoruka = listaPoruka;
+            porukeModel.poruka = Poruka;
+            porukeModel.brojNeprocitanih = 0;
+            porukeModel.listaZaCitanje = listaZaCitanje;
+            return View(porukeModel);
+        }
+
+        [HttpPost]
+        public ActionResult Poruke(PorukeModel porukaModel)
+        {
+            porukaModel.poruka.vrijemeSlanja = DateTime.Now.TimeOfDay;
+            var pom = porukaModel.poruka.idPosiljaoca;
+            porukaModel.poruka.idPosiljaoca = Convert.ToInt32(Session["id"]);
+            porukaModel.poruka.idPrimaoca = pom;
+            porukaModel.poruka.procitana = 0;
+
+            string constr = ConfigurationManager.ConnectionStrings["ConnectionStringName"].ConnectionString;
+            SqlConnection sqlcon = new SqlConnection(constr);
+            if (sqlcon.State == ConnectionState.Closed)
+            {
+                sqlcon.Open();
+            }
+            SqlCommand sqlcmd = new SqlCommand("dodajPoruku", sqlcon);
+            sqlcmd.CommandType = CommandType.StoredProcedure;
+            sqlcmd.Parameters.AddWithValue("@idPrimaoca", Convert.ToInt32(porukaModel.poruka.idPrimaoca));
+            sqlcmd.Parameters.AddWithValue("@idPosiljaoca", Convert.ToInt32(Session["id"]));
+            sqlcmd.Parameters.AddWithValue("@tekst", porukaModel.poruka.sadrzaj);
+            sqlcmd.Parameters.AddWithValue("@procitana", 0);
+            sqlcmd.Parameters.AddWithValue("@vrijeme", porukaModel.poruka.vrijemeSlanja);
+            sqlcmd.ExecuteNonQuery();
+
+            porukaModel.listaZaCitanje.Add(porukaModel.poruka);
+            return RedirectToAction("Poruke/" + porukaModel.poruka.idPrimaoca, "Korisnik");
+        }
+        
     }
+
 }
